@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+   <form id="testForm" method="post">
+      <input type="hidden" name="u.name" value="测试"/>
+      <input type="hidden" name="u.age" value="1"/>
+   </form>
+   <script type="text/javascript">
+      $.ajax({
+    	  url:"xxxxx",
+    	  data:$("#testForm").serialize(),
+    	  success : function(data){
+    	  }
+      });
+   </script>
+</body>
+</html>

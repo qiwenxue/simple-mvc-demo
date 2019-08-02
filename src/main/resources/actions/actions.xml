@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+ <bean class="com.demo.www.test.action.UserAction"></bean>
+ <bean class="com.demo.www.test.action.SysAction"></bean>
+ <bean class="com.demo.www.test.action.CustAction"></bean>
+ <bean class="com.demo.www.test.action.ExportAction"></bean>
+</beans>

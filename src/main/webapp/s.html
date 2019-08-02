@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>js调用手机里的功能</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/des.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+	  saveUser();
+  });
+  
+  var saveUser = function() {
+	  $.ajax({
+		  url : path+"/cst/fs.do",
+		  dataType : "json",
+		  type:"POST",
+		  success : function(data){
+		    var state = data.state;
+		    if ( state != 0 ) {
+		    	alert(data.desc);
+		    	return;
+		    }
+		    var objs = data.data;
+		    var temp = "";
+		    for ( var i=0; i<objs.length; i++ ) {
+		    	var obj = objs[i];
+		    	temp+="<tr>";
+		    	    temp+="<td>"+ obj.id +"</td>";
+		    	    temp+="<td>"+ obj.orgId+"</td>";
+		    	    temp+="<td>"+ obj.orgCode+"</td>";
+		    	    temp+="<td>"+ obj.custCode+"</td>";
+		    	    temp+="<td>"+ obj.custName+"</td>";
+		    	temp+="</tr>";
+		    }
+		    $("#t_content").html(temp);
+		  }
+	  });
+  };
+  var download = function() {
+	  $("#dowloadForm").attr("action",path+ "/export/exportDetail.do");
+	 $("#dowloadForm").submit();
+  };
+</script>
+</head>
+<body>
+   <div id="test">
+   <form  id="dowloadForm" target="fromhtml"  method="post">
+     <input type="button" name="button" value="download" onclick="download()"/>
+     <input type="hidden" name="name" value="aaaa"/>
+     <input type="hidden" name="age" value="100"/>
+   </form>
+   <iframe name="fromhtml" src="" style="display: none"></iframe>
+   </div>
+   <table style="width:400px;border:1px solid #FFFFFF">
+     <thead>
+       <tr><td>ID</td><td>orgId</td><td>orgCode</td><td>custCode</td><td>custName</td></tr>
+     </thead>
+     <tbody id="t_content">
+     </tbody>
+   </table>
+</body>
+</html>

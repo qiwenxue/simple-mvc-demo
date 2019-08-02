@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>js调用手机里的功能</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/des.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+	  $("#saveUser").click( function(){
+		  saveUser();
+	  });
+	  $("#findUser").click( function(){
+		  findUser();
+	  });
+	  $("#loginBtn").click( function(){
+		  login();
+	  });
+  });
+  
+  var saveUser = function() {
+	  $.ajax({
+		  url : path+"/user/saveUser.do",
+		  data : {
+			  "u.userName":"小明",
+			  "u.userAge":10
+		  },
+		  dataType : "json",
+		  type:"POST",
+		  success : function(data){
+			alert(data.desc);
+		  }
+	  });
+  };
+  
+  var findUser = function() {
+	  $.ajax({
+		  url : path+"/user/findUser.do",
+		  data : {
+			  "u.id":1
+		  },
+		  dataType : "json",
+		  type:"GET",
+		  success : function(data){
+			alert(data.desc);
+		  }
+	  });
+  };
+  
+  var login = function() {
+	  $.ajax({
+		  url : path+"/sys/login.do",
+		  data : {
+			  "su.userCode":$("#userCode").val(),
+			  "su.pwd":strEncodeDefault($("#passwd").val()),
+			  "su.orgCode":$("#orgCode").val()
+		  },
+		  dataType : "json",
+		  type:"POST",
+		  success : function(data){
+			if ( data.state == 0 ) {
+				window.location.href = path+"/s.html";
+			} else {
+			  alert(data.desc);
+			}
+		  }
+	  });
+  };
+</script>
+</head>
+<body>
+  <input type="button" value="saveUser" id="saveUser"/>
+  <input type="button" value="findUser" id="findUser"/>
+  <br>
+  <fieldset id="form" style="width:200px;">
+      userCode:<input type="text" value="" id="userCode" name="su.userCode"/><br>
+      passwd:<input type="text" value="" id="passwd"  name="su.pwd"/><br>
+      orgCode:<input type="text" value="" id="orgCode" name="su.orgCode"/><br>
+      <input type="button" value="登陆" id="loginBtn"/>
+  </fieldset>
+</body>
+</html>

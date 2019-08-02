@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bean>
+  <source id="default" class="core.db.DBConnectionDataSource">
+      <property name="driver">com.mysql.jdbc.Driver</property>
+      <property name="url">jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8</property>
+      <property name="user">root</property>
+      <property name="password">root</property>
+      <property name="initpool">5</property>
+      <property name="minConn">20</property>
+      <property name="maxConn">500</property>
+      <property name="idletime">60000</property>
+      <property name="waittime">20000</property>
+      <property name="idleConnectionTestPeriod">60</property>
+      <property name="maxstatements">0</property>
+  </source>
+</bean>
