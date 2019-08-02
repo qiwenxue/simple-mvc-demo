@@ -14,6 +14,13 @@
 			<artifactId>simple-mvc-lib</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.30</version>
+</dependency>
+		
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
