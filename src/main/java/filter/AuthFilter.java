@@ -22,11 +22,9 @@ import net.sf.json.JSONObject;
 public class AuthFilter implements Filter {
   private String uri;
     
-  @Override
   public void destroy() {
   }
 
-  @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException {
     HttpServletRequest req = (HttpServletRequest)request;
@@ -41,7 +39,7 @@ public class AuthFilter implements Filter {
       chain.doFilter(req, resp);
       return;
     }
-    if ( (","+uri+",").contains((","+url+",")) ) {//不需要进行拦截的地址
+    if ( (","+uri+",").contains((","+url+",")) ) {//涓嶉渶瑕佽繘琛屾嫤鎴殑鍦板潃
       chain.doFilter(req, resp);
       return;
     }
@@ -52,11 +50,11 @@ public class AuthFilter implements Filter {
         if ( CommUtils.isNull(str)) {
           JSONObject obj = new JSONObject();
           obj.put(core.util.Const.RESPONSE.STATE, 1);
-          obj.put(core.util.Const.RESPONSE.ERRMSG, "您尚未登录,请重新登录");
+          obj.put(core.util.Const.RESPONSE.ERRMSG, "鎮ㄥ皻鏈櫥褰�,璇烽噸鏂扮櫥褰�");
           ajaxMethod( obj.toString(), resp );
           return;
         } else {
-          Cache.set(token, str);//延长过期时间
+          Cache.set(token, str);//寤堕暱杩囨湡鏃堕棿
         }
       } catch (Exception e) {
          e.printStackTrace();
@@ -65,21 +63,20 @@ public class AuthFilter implements Filter {
     } else {
       JSONObject obj = new JSONObject();
       obj.put(core.util.Const.RESPONSE.STATE, 1);
-      obj.put(core.util.Const.RESPONSE.ERRMSG, "您尚未登录,请重新登录");
+      obj.put(core.util.Const.RESPONSE.ERRMSG, "鎮ㄥ皻鏈櫥褰�,璇烽噸鏂扮櫥褰�");
       ajaxMethod( obj.toString(), resp );
       return;
     }
     chain.doFilter(req, resp);
   }
 
-  @Override
   public void init(FilterConfig config) throws ServletException {
     uri = CommUtils.getPropValByKey("action.request.url.noneed.auth", "conf");
   }
    
   
   /**
-   * ajax方法
+   * ajax鏂规硶
    * 
    * @param messages
    * @throws Exception

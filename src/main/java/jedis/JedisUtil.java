@@ -11,7 +11,7 @@ public class JedisUtil {
   
   private static JedisUtil jedisUtil;
   
-  private static final int EXPIRE_TIME = 60; //20分钟操作，就过期
+  private static final int EXPIRE_TIME = 60; //20鍒嗛挓鎿嶄綔锛屽氨杩囨湡
   
   private JedisUtil() {}
   
@@ -27,11 +27,12 @@ public class JedisUtil {
   }
   
   /**
-   * 存入某条记录
+   * 瀛樺叆鏌愭潯璁板綍
    * @param key
    * @param value
+ * @throws Exception 
    */
-  public void set(String key, String value){
+  public void set(String key, String value) throws Exception{
     Jedis jedis = RedisPoolUtil.getJedis();
     try {
       jedis.set(key.getBytes(), value.getBytes());
@@ -45,12 +46,13 @@ public class JedisUtil {
   }
     
   /**
-   * 存入某条记录
+   * 瀛樺叆鏌愭潯璁板綍
    * @param tableKey
    * @param valueKey
    * @param object
+ * @throws Exception 
    */
-  public void put(String tableKey, String valueKey, Object object ) {
+  public void put(String tableKey, String valueKey, Object object ) throws Exception {
     Jedis jedis = RedisPoolUtil.getJedis();
     try {
        jedis.hset(tableKey.getBytes(), valueKey.getBytes(), SerializeUtil.serialize(object));
@@ -64,13 +66,14 @@ public class JedisUtil {
   }
   
   /**
-   * 存入缓存，带过期时间
+   * 瀛樺叆缂撳瓨锛屽甫杩囨湡鏃堕棿
    * @param tableKey
    * @param valueKey
    * @param object
    * @param expireTime
+ * @throws Exception 
    */
-  public void put( String tableKey, String valueKey, Object object, int expireTime ) {
+  public void put( String tableKey, String valueKey, Object object, int expireTime ) throws Exception {
     Jedis jedis = RedisPoolUtil.getJedis();
     try {
        jedis.hset(tableKey.getBytes(), valueKey.getBytes(), SerializeUtil.serialize(object));
@@ -84,9 +87,10 @@ public class JedisUtil {
   }
   
   /**
-   * 不过期
+   * 涓嶈繃鏈�
+ * @throws Exception 
    */
-  public void putWithNoExpireTime( String tableKey, String valueKey, Object object) {
+  public void putWithNoExpireTime( String tableKey, String valueKey, Object object) throws Exception {
     Jedis jedis = RedisPoolUtil.getJedis();
     try {
        jedis.hset(tableKey.getBytes(), valueKey.getBytes(), SerializeUtil.serialize(object));
@@ -99,7 +103,7 @@ public class JedisUtil {
   }
   
   /**
-   * 获取某条记录
+   * 鑾峰彇鏌愭潯璁板綍
    * @param tableKey
    * @param objectKey
    * @return
@@ -108,10 +112,10 @@ public class JedisUtil {
   public Object get(String tableKey, String objectKey) throws Exception {
     Jedis jedis = RedisPoolUtil.getJedis();
     if ( CommUtils.isNull(tableKey) ) {
-      throw new Exception("参数tableKey不能为空");
+      throw new Exception("鍙傛暟tableKey涓嶈兘涓虹┖");
     }
     if ( CommUtils.isNull(objectKey) ) {
-      throw new Exception("参数objectKey不能为空");
+      throw new Exception("鍙傛暟objectKey涓嶈兘涓虹┖");
     }
     try {
       byte[] serObject = jedis.hget(tableKey.getBytes(), objectKey.getBytes());
@@ -125,14 +129,14 @@ public class JedisUtil {
   }
   
   /**
-   * 获取表table里的所有的数据
+   * 鑾峰彇琛╰able閲岀殑鎵�鏈夌殑鏁版嵁
    * @param tableKey
    * @throws Exception 
    */
   public List<Object> getAll( String tableKey ) throws Exception {
     List<Object> objs = new ArrayList<Object>(); 
     if ( CommUtils.isNull(tableKey) ) {
-      throw new Exception("参数tableKey不能为空");
+      throw new Exception("鍙傛暟tableKey涓嶈兘涓虹┖");
     }
     Jedis jedis = RedisPoolUtil.getJedis();
     try {
@@ -154,14 +158,14 @@ public class JedisUtil {
   }
   
   /**
-   * 查找表tableKey里一共有多少数据
+   * 鏌ユ壘琛╰ableKey閲屼竴鍏辨湁澶氬皯鏁版嵁
    * @param tableKey
    * @return
    * @throws Exception
    */
   public int getSize( String tableKey ) throws Exception {
     if ( CommUtils.isNull(tableKey) ) {
-      throw new Exception("参数tableKey不能为空");
+      throw new Exception("鍙傛暟tableKey涓嶈兘涓虹┖");
     }
     Jedis jedis = RedisPoolUtil.getJedis();
     try {
@@ -179,12 +183,13 @@ public class JedisUtil {
   }
   
   /**
-   * 查看是否存在key
+   * 鏌ョ湅鏄惁瀛樺湪key
    * @param tableKey
    * @param objectKey
    * @return
+ * @throws Exception 
    */
-  public boolean containsKey(String tableKey, String objectKey) {
+  public boolean containsKey(String tableKey, String objectKey) throws Exception {
     Jedis jedis = null;
     try {
       jedis = RedisPoolUtil.getJedis();
@@ -198,11 +203,12 @@ public class JedisUtil {
   }
   
   /**
-   * 删除某个记录
+   * 鍒犻櫎鏌愪釜璁板綍
    * @param tableKey
    * @param objectKey
+ * @throws Exception 
    */
-  public void remove(String tableKey, String objectKey) {
+  public void remove(String tableKey, String objectKey) throws Exception {
     Jedis jedis = null;
     try {
       jedis = RedisPoolUtil.getJedis();
@@ -216,10 +222,11 @@ public class JedisUtil {
   }
   
   /**
-   * 清除对应table的Jedis数据
+   * 娓呴櫎瀵瑰簲table鐨凧edis鏁版嵁
    * @param tableKey
+ * @throws Exception 
    */
-  public void clearTable(String tableKey) {
+  public void clearTable(String tableKey) throws Exception {
     Jedis jedis = null;
     try {
       jedis = RedisPoolUtil.getJedis();
@@ -236,11 +243,12 @@ public class JedisUtil {
   }
   
   /**
-   * 设置key的过期时间
+   * 璁剧疆key鐨勮繃鏈熸椂闂�
    * @param key
-   * @param seconds 单位：秒
+   * @param seconds 鍗曚綅锛氱
+ * @throws Exception 
    */
-	public void expire(String key, String value, int seconds) {
+	public void expire(String key, String value, int seconds) throws Exception {
 		Jedis jedis = RedisPoolUtil.getJedis();
 		try {
 			jedis.set(key, value);
@@ -253,11 +261,12 @@ public class JedisUtil {
 		}
 	}
 	/**
-	 * 根据key，获取value值
+	 * 鏍规嵁key锛岃幏鍙杤alue鍊�
 	 * @param key
 	 * @return
+	 * @throws Exception 
 	 */
-	public String get(String key) {
+	public String get(String key) throws Exception {
 		if(key == null || key.trim().length()==0) return null;
 		Jedis jedis = RedisPoolUtil.getJedis();
 		try {
