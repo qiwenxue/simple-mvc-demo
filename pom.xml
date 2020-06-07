@@ -10,7 +10,7 @@
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
-			<groupId>com</groupId>
+			<groupId>com.simplemvc</groupId>
 			<artifactId>simple-mvc-lib</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
